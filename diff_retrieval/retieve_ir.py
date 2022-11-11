@@ -124,8 +124,7 @@ class ProjectionLight(pyredner.DeferredLight):
         image_samples = image_samples.view(1, position.shape[0], position.shape[1], 2)
         # Now we have a list of 2D points, we want to find the corresponding
         # positions on the input image
-        print(self.intensity.shape, image_samples.shape)
-        assert 1==0
+        
         intensity = torch.nn.functional.grid_sample(self.intensity, image_samples.clone())
         # NCHW -> HWC
         intensity = intensity.permute(0, 2, 3, 1).squeeze()
