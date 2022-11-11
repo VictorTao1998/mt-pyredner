@@ -427,6 +427,7 @@ if __name__ == "__main__":
                 logger.info(
                     f"iter: {i:4d} loss_total: {loss_total / (i + 1):.3f}, loss_depth: {loss_depth / (i + 1):.3f},"
                     f" loss_grad: {loss_grad / (i + 1):.3f}")
+        print(torch.sum(diff_scene.light_image==0))
         loss_total /= num_sample
         loss_depth /= num_sample
         loss_grad /= num_sample
