@@ -37,9 +37,9 @@ def visualize_depth(depth):
 
 
 BASELINE_DATA_DIR = Path("/messytable-slow-vol/messy-table-dataset/baseline_images")
-BASELINE_POSE_DIR = Path("/rayc-fast/ICCV2021_Diagnosis/ocrtoc_materials/baseline_poses/")
-OBJ_MODEL_DIR = Path("/rayc-fast/ICCV2021_Diagnosis/ocrtoc_materials/models/")
-REPO_DIR = Path("/jianyu-fast-vol/mt-pyredner/")
+BASELINE_POSE_DIR = Path("/rayc-fast/ICCV2021_Diagnosis/ocrtoc_materials/baseline_poses")
+OBJ_MODEL_DIR = Path("/rayc-fast/ICCV2021_Diagnosis/ocrtoc_materials/models")
+REPO_DIR = Path("/jianyu-fast-vol/mt-pyredner")
 
 OBJECTS = []
 objects_info_csv = csv.DictReader(open("/rayc-fast/ICCV2021_Diagnosis/ocrtoc_materials/objects.csv"))

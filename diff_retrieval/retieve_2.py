@@ -36,13 +36,13 @@ def visualize_depth(depth):
     return vis_depth
 
 
-BASELINE_DATA_DIR = Path("/media/DATA/LINUX_DATA/ICCV2021_Diagnosis/baseline_images")
-BASELINE_POSE_DIR = Path("/home/rayu/Projects/ICCV2021_Diagnosis/ocrtoc_materials/baseline_poses")
-OBJ_MODEL_DIR = Path("/home/rayu/Projects/ICCV2021_Diagnosis/ocrtoc_materials/models")
-REPO_DIR = Path("/home/rayu/Projects/active_zero2")
+BASELINE_DATA_DIR = Path("/media/jianyu/dataset/ICCV2021_Diagnosis/baseline_images")
+BASELINE_POSE_DIR = Path("/media/jianyu/dataset/ICCV2021_Diagnosis/ocrtoc_materials/baseline_poses")
+OBJ_MODEL_DIR = Path("/media/jianyu/dataset/ICCV2021_Diagnosis/ocrtoc_materials/models")
+REPO_DIR = Path("/code/activezero2")
 
 OBJECTS = []
-objects_info_csv = csv.DictReader(open("/home/rayu/Projects/ICCV2021_Diagnosis/ocrtoc_materials/objects.csv"))
+objects_info_csv = csv.DictReader(open("/media/jianyu/dataset/ICCV2021_Diagnosis/ocrtoc_materials/objects.csv"))
 for idx, row in enumerate(objects_info_csv):
     info = dict(row)
     object_name = info['object']
