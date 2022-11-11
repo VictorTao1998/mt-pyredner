@@ -1,0 +1,106 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    user: jianyu
+  name: jianyu-job-pyredner
+  namespace: ucsd-haosulab
+spec:
+  backoffLimit: 200
+  template:
+    metadata:
+      labels:
+        nautilus.io/rl: 'true'
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: nautilus.io/group
+                operator: In
+                values:
+                - haosu
+              - key: nvidia.com/gpu.product
+                operator: In
+                values:
+                - NVIDIA-GeForce-RTX-2080-Ti
+      containers:
+      - args:
+        - /root/miniconda3/bin/conda init && source /root/miniconda3/etc/profile.d/conda.sh
+          && conda activate activezero2 && cd /jianyu-fast-vol/activezero2/ && ulimit -c
+          0 && python diff_retrieval/retieve_ir.py
+        command:
+        - /bin/bash
+        - -c
+        image: haosulab/activezero2:simsense-redner
+        name: container
+        resources:
+          limits:
+            cpu: '4'
+            memory: 12Gi
+            nvidia.com/gpu: 1
+          requests:
+            cpu: '4'
+            memory: 12Gi
+            nvidia.com/gpu: 1
+        volumeMounts:
+        - mountPath: /cephfs
+          name: cephfs
+        - mountPath: /jet
+          name: jet-fast-vol
+        - mountPath: /jet-slow
+          name: jet-slow-vol
+        - mountPath: /rayc-fast
+          name: rayc-fast-vol
+        - mountPath: /rayc-slow
+          name: rayc-slow-vol
+        - mountPath: /jet-ris
+          name: jet-ris-vol
+        - mountPath: /isabella-fast
+          name: isabella-fast-vol
+        - mountPath: /isabella-slow
+          name: isabella-slow-vol
+        - mountPath: /messytable-slow
+          name: messytable-slow-vol
+        - mountPath: /dev/shm
+          name: dshm
+        - name: jianyu-fast-vol
+          mountPath: /jianyu-fast-vol
+      priorityClassName: nice
+      restartPolicy: OnFailure
+      volumes:
+      - name: cephfs
+        persistentVolumeClaim:
+          claimName: haosulab-cephfs
+      - name: rayc-fast-vol
+        persistentVolumeClaim:
+          claimName: rayc-fast-vol
+      - name: rayc-slow-vol
+        persistentVolumeClaim:
+          claimName: rayc-slow-vol
+      - name: jet-ris-vol
+        persistentVolumeClaim:
+          claimName: jet-ris-vol
+      - name: jet-fast-vol
+        persistentVolumeClaim:
+          claimName: jet-fast-vol
+      - name: jet-slow-vol
+        persistentVolumeClaim:
+          claimName: jet-slow-vol
+      - name: isabella-fast-vol
+        persistentVolumeClaim:
+          claimName: isabella-fast-vol
+      - name: isabella-slow-vol
+        persistentVolumeClaim:
+          claimName: isabella-slow-vol
+      - name: messytable-slow-vol
+        persistentVolumeClaim:
+          claimName: messytable-slow-vol
+      - name: jianyu-fast-vol
+        persistentVolumeClaim:
+          claimName: jianyu-fast-vol
+      - emptyDir:
+          medium: Memory
+        name: dshm
+  ttlSecondsAfterFinished: 86400
