@@ -122,8 +122,7 @@ class ProjectionLight(pyredner.DeferredLight):
         local_fov_scaled = local_fov_scaled / local_fov_scaled[:, 2:3]
         image_samples = local_fov_scaled[:, 0:2]
         image_samples = image_samples.view(1, position.shape[0], position.shape[1], 2)
-        print(self.intensity.shape, image_samples.shape)
-        assert 1==0
+        
         # Now we have a list of 2D points, we want to find the corresponding
         # positions on the input image
         intensity = torch.nn.functional.grid_sample(self.intensity, image_samples)
