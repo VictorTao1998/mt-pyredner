@@ -428,7 +428,7 @@ if __name__ == "__main__":
             optimizer.step()
             loss_total += render_loss.item()
 
-            summary_writer.add_scalar("train/mse_loss", render_loss.item, global_step=epoch_idx*num_sample+i)
+            summary_writer.add_scalar("train/mse_loss", render_loss.item(), global_step=epoch_idx*num_sample+i)
             summary_writer.add_image('train/irl_render', render_dict["irl"], epoch_idx*num_sample+i)
             summary_writer.add_image('train/irl_gt', render_dict["gt_irl"], epoch_idx*num_sample+i)
             if i % 20 == 0:
