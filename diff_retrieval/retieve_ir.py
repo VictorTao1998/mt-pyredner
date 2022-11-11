@@ -39,10 +39,10 @@ def visualize_depth(depth):
 BASELINE_DATA_DIR = Path("/messytable-slow-vol/messy-table-dataset/baseline_images")
 BASELINE_POSE_DIR = Path("/rayc-fast/ICCV2021_Diagnosis/ocrtoc_materials/baseline_poses/")
 OBJ_MODEL_DIR = Path("/rayc-fast/ICCV2021_Diagnosis/ocrtoc_materials/models/")
-REPO_DIR = Path("/home/rayu/Projects/active_zero2")
+REPO_DIR = Path("/jianyu-fast-vol/mt-pyredner/")
 
 OBJECTS = []
-objects_info_csv = csv.DictReader(open("/home/rayu/Projects/ICCV2021_Diagnosis/ocrtoc_materials/objects.csv"))
+objects_info_csv = csv.DictReader(open("/rayc-fast/ICCV2021_Diagnosis/ocrtoc_materials/objects.csv"))
 for idx, row in enumerate(objects_info_csv):
     info = dict(row)
     object_name = info['object']
@@ -183,15 +183,15 @@ class DiffScene:
     def __init__(self):
         self.img_height, self.img_width = 360, 640
         self.epsilon = torch.tensor([1e-3], dtype=torch.float32, device=pyredner.get_device(), requires_grad=True)
-        self.mu = torch.tensor([0.0], dtype=torch.float32, device=pyredner.get_device(), requires_grad=True)
-        self.sigma = torch.tensor([1e-3], dtype=torch.float32, device=pyredner.get_device(), requires_grad=True)
-        self.beta = torch.tensor([20], dtype=torch.float32, device=pyredner.get_device(), requires_grad=True)
+        #self.mu = torch.tensor([0.0], dtype=torch.float32, device=pyredner.get_device(), requires_grad=True)
+        #self.sigma = torch.tensor([1e-3], dtype=torch.float32, device=pyredner.get_device(), requires_grad=True)
+        #self.beta = torch.tensor([20], dtype=torch.float32, device=pyredner.get_device(), requires_grad=True)
 
-        self.cnn_1 = nn.Sequential(nn.Conv2d(3, 32, 5, stride=1, padding=2, bias=False),
-                                   nn.ReLU(),
-                                   ).cuda()
-        self.cnn_2 = nn.Conv2d(32, 1, 1, bias=False).cuda()
-        torch.nn.init.zeros_(self.cnn_2.weight)
+        #self.cnn_1 = nn.Sequential(nn.Conv2d(3, 32, 5, stride=1, padding=2, bias=False),
+        #                           nn.ReLU(),
+        #                           ).cuda()
+        #self.cnn_2 = nn.Conv2d(32, 1, 1, bias=False).cuda()
+        #torch.nn.init.zeros_(self.cnn_2.weight)
 
         self.path_list = self._gen_path_list()
         self.cam_poses = np.load(REPO_DIR / "data_rendering/materials/cam_db_neoneo.npy")
@@ -269,9 +269,9 @@ class DiffScene:
         img_irr = pyredner.render_deferred(scene=scene, lights=[active_light, ambient_light], alpha=False)[..., 0]
 
         # add noise
-        img_irl = img_irl + torch.randn_like(img_irl) * self.sigma + self.mu
-        img_irr = img_irr + torch.randn_like(img_irr) * self.sigma + self.mu
-
+        #img_irl = img_irl + torch.randn_like(img_irl) * self.sigma + self.mu
+        #img_irr = img_irr + torch.randn_like(img_irr) * self.sigma + self.mu
+        """
         disp = block_matching(
             img_irl,
             img_irr,
@@ -290,7 +290,7 @@ class DiffScene:
         shadow_map = shadow_map[:, :, self.max_disp:]
 
         output = self.cnn_2(self.cnn_1(torch.stack([stereo_depth, clean_depth, shadow_map], dim=1)))[0] + stereo_depth
-
+        """
         # load real input
         real_depth = cv2.imread(
             paths["real_depth"],
@@ -310,11 +310,11 @@ class DiffScene:
         mask = cv2.resize(mask, (self.img_width, self.img_height), interpolation=cv2.INTER_NEAREST)
         mask = mask < 10
         return {
-            "clean_depth": clean_depth,
-            "stereo_depth": stereo_depth,
-            "shadow_map": shadow_map,
+            #"clean_depth": clean_depth,
+            #"stereo_depth": stereo_depth,
+            #"shadow_map": shadow_map,
             "gt_irl": gt_irl,
-            "post_depth": output,
+            #"post_depth": output,
             "irl": img_irl,
             "irr": img_irr,
             "real_depth": torch.tensor(real_depth).to(pyredner.device).float(),
@@ -395,7 +395,7 @@ if __name__ == "__main__":
 
 
     optimizer = torch.optim.Adam(
-        [diff_scene.light_image],
+        [diff_scene.light_image, diff_scene.epsilon],
         lr=0.001)
 
     logger.info(
