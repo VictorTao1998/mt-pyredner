@@ -61,7 +61,7 @@ spec:
           name: isabella-fast-vol
         - mountPath: /isabella-slow
           name: isabella-slow-vol
-        - mountPath: /messytable-slow
+        - mountPath: /messytable-slow-vol
           name: messytable-slow-vol
         - mountPath: /dev/shm
           name: dshm

@@ -295,8 +295,7 @@ class DiffScene:
         real_depth = cv2.imread(
             paths["real_depth"],
             cv2.IMREAD_UNCHANGED)
-        print(paths["real_depth"], type(real_depth))
-        assert 1==0
+
         
         real_depth = (real_depth.astype(float)) / 1000.0
         real_depth = cv2.resize(real_depth, (self.img_width, self.img_height),
@@ -417,7 +416,7 @@ if __name__ == "__main__":
 
             render_loss.backward()
             optimizer.step()
-            loss_total += total_loss.item()
+            loss_total += render_loss.item()
             if i % 20 == 0:
                 logger.info(
                     f"iter: {i:4d} loss_total: {loss_total / (i + 1):.3f}, loss_depth: {loss_depth / (i + 1):.3f},"
