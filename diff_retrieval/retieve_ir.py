@@ -205,6 +205,7 @@ class DiffScene:
         light_image = pyredner.imread(REPO_DIR / 'data_rendering/materials/d415-pattern-sq.png')
         # Convert light_image to current device
         self.light_image = light_image.to(pyredner.get_device())
+        self.light_image = torch.zeros_like(self.light_image, requires_grad=True)
 
         self.min_disp = 8
         self.max_disp = 64
@@ -391,7 +392,7 @@ if __name__ == "__main__":
         return depth_loss, grad_loss
 
     def compute_loss_img(render_dict):
-        mse_loss = F.l2_loss(render_dict["gt_irl"], render_dict["irl"])
+        mse_loss = F.mse_loss(render_dict["gt_irl"], render_dict["irl"])
 
         return mse_loss
 
