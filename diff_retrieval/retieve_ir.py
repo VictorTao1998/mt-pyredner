@@ -17,6 +17,7 @@ import csv
 from loguru import logger
 import time
 import sys
+from torch.utils.tensorboard import SummaryWriter
 
 from diffbm_utils import block_matching
 
@@ -362,6 +363,9 @@ if __name__ == "__main__":
 
     timestamp = time.strftime("%y-%m-%d_%H-%M-%S")
     filename = f"log.diff_retrieval.{timestamp}.txt"
+    tflogger_dir = REPO_DIR + "/logs"
+    os.makedirs(tflogger_dir, exist_ok=True)
+    summary_writer = SummaryWriter(tflogger_dir)
     logger.remove()
     fmt = (
         f"<green>{{time:YYYY-MM-DD HH:mm:ss.SSS}}</green> | "
@@ -423,11 +427,15 @@ if __name__ == "__main__":
             render_loss.backward()
             optimizer.step()
             loss_total += render_loss.item()
+
+            summary_writer.add_scalar("train/mse_loss", render_loss.item, global_step=epoch_idx*num_sample+i)
+            summary_writer.add_image('train/irl_render', render_dict["irl"], epoch_idx*num_sample+i)
+            summary_writer.add_image('train/irl_gt', render_dict["gt_irl"], epoch_idx*num_sample+i)
             if i % 20 == 0:
                 logger.info(
                     f"iter: {i:4d} loss_total: {loss_total / (i + 1):.3f}, loss_depth: {loss_depth / (i + 1):.3f},"
                     f" loss_grad: {loss_grad / (i + 1):.3f}")
-        print(torch.sum(diff_scene.light_image==0))
+        #print(torch.sum(diff_scene.light_image==0))
         loss_total /= num_sample
         loss_depth /= num_sample
         loss_grad /= num_sample

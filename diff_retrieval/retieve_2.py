@@ -410,6 +410,7 @@ if __name__ == "__main__":
             total_loss.backward()
             optimizer.step()
             loss_total += total_loss.item()
+            
             if i % 20 == 0:
                 logger.info(
                     f"iter: {i:4d} loss_total: {loss_total / (i + 1):.3f}, loss_depth: {loss_depth / (i + 1):.3f},"
