@@ -445,13 +445,14 @@ if __name__ == "__main__":
         logger.info(
             f"eps: {diff_scene.epsilon.item():.2f};")
         logger.info("===================================================")
-
+        """
         torch.save(
             {
                 "eps": diff_scene.epsilon
             },
             f"EP{epoch_idx:03d}.pth"
         )
+        """
         # cv2.imwrite("clean_depth.png", visualize_depth(render_dict["clean_depth"][0].cpu().numpy()))
         # cv2.imwrite("stereo_depth.png", visualize_depth(render_dict["stereo_depth"][0].detach().cpu().numpy()))
         # cv2.imwrite("post_depth.png", visualize_depth(render_dict["post_depth"][0].detach().cpu().numpy()))
