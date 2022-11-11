@@ -429,8 +429,8 @@ if __name__ == "__main__":
             loss_total += render_loss.item()
 
             summary_writer.add_scalar("train/mse_loss", render_loss.item(), global_step=epoch_idx*num_sample+i)
-            summary_writer.add_image('train/irl_render', render_dict["irl"], epoch_idx*num_sample+i)
-            summary_writer.add_image('train/irl_gt', render_dict["gt_irl"], epoch_idx*num_sample+i)
+            summary_writer.add_image('train/irl_render', render_dict["irl"].detach(), global_step=epoch_idx*num_sample+i, dataformats='HW')
+            summary_writer.add_image('train/irl_gt', render_dict["gt_irl"].detach(), global_step=epoch_idx*num_sample+i, dataformats='HW')
             if i % 20 == 0:
                 logger.info(
                     f"iter: {i:4d} loss_total: {loss_total / (i + 1):.3f}, loss_depth: {loss_depth / (i + 1):.3f},"
