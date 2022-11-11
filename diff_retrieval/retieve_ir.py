@@ -380,7 +380,7 @@ if __name__ == "__main__":
     logger.add(sys.stdout, format=fmt)
 
     # hyper parameters
-    NUM_EPOCHS = 10
+    NUM_EPOCHS = 100
     huber_delta = 0.03
     GRAD_WEIGHT = 1e-3
 
