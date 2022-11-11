@@ -399,7 +399,7 @@ if __name__ == "__main__":
         lr=0.001)
 
     logger.info(
-        f"eps: {diff_scene.epsilon.item():.2f}; mu: {diff_scene.mu.item():.2f}; sigma: {diff_scene.sigma.item():.2f}; beta: {diff_scene.beta.item():.2f}")
+        f"eps: {diff_scene.epsilon.item():.2f};")
 
     for epoch_idx in range(1, NUM_EPOCHS + 1):
         loss_depth = 0.0

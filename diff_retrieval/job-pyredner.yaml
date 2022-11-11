@@ -28,7 +28,7 @@ spec:
       containers:
       - args:
         - /root/miniconda3/bin/conda init && source /root/miniconda3/etc/profile.d/conda.sh
-          && conda activate activezero2 && cd /jianyu-fast-vol/activezero2/ && ulimit -c
+          && conda activate activezero2 && cd /jianyu-fast-vol/mt-pyredner && ulimit -c
           0 && python diff_retrieval/retieve_ir.py
         command:
         - /bin/bash
