@@ -1,0 +1,7 @@
+import numpy as np
+import sapien
+
+token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoZW5yMTdAbWFpbHMudHNpbmdodWEuZWR1LmNuIiwiaXAiOiIxNzIuMjAuMC4xIiwicHJpdmlsZWdlIjoxLCJmaWxlT25seSI6dHJ1ZSwiaWF0IjoxNjY1MzA5NTE0LCJleHAiOjE2OTY4NDU1MTR9.2Hcoro6iSRUJ-Oa0PgsyDIukLjUA8VBdRVYiP4SM3bc"
+urdf_file = sapien.asset.download_partnet_mobility(30869, token)
+# create scene and URDF loader
+# urdf_loader.load(urdf_file)

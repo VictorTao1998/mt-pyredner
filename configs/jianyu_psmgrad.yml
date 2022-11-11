@@ -1,0 +1,66 @@
+OUTPUT_DIR: '/jianyu-fast-vol/eval/psm_grad_test'
+DATA:
+  TRAIN:
+    SIM:
+      ROOT_DIR: "/messytable-slow-vol/messy-table-dataset/primv2_rdang_rdpat_rdlight/data/"
+      SPLIT_FILE: "/messytable-slow-vol/messy-table-dataset/primv2_rdang_rdpat_rdlight/train.txt"
+      META_NAME: "meta.pkl"
+      DEPTH_NAME: "depthL.png"
+      LEFT_NAME: "0128_irL_kuafu_half.png"
+      RIGHT_NAME: "0128_irR_kuafu_half.png"
+    REAL:
+      ROOT_DIR: "/messytable-slow-vol/messy-table-dataset/rand_scenes/rand_scenes"
+      SPLIT_FILE: "/messytable-slow-vol/messy-table-dataset/rand_scenes/train_list.txt"
+      LEFT_NAME: "1024_irL_real_360.png"
+      RIGHT_NAME: "1024_irR_real_360.png"
+      LEFT_PATTERN_NAME: "1024_irL_real_temporal_ps11.png"
+      RIGHT_PATTERN_NAME: "1024_irR_real_temporal_ps11.png"
+
+  TEST:
+    REAL:
+      ROOT_DIR: "/messytable-slow-vol/messy-table-dataset/real_data_v10/"
+      SPLIT_FILE: "/messytable-slow/messy-table-dataset/ijrrobj_simtest_fixang_fixpat/test_hand_sample.txt"
+      META_NAME: "meta.pkl"
+      DEPTH_NAME: "depthL.png"
+      LEFT_NAME: "1024_irL_real.png"
+      RIGHT_NAME: "1024_irR_real.png"
+      LABEL_NAME: "irL_label_image.png"
+      NORMAL_NAME: "normalL.png"
+      HEIGHT: 544
+      WIDTH: 960
+
+MODEL_TYPE: "PSMNetGrad"
+PSMNetGrad:
+  MIN_DISP: 12
+  MAX_DISP: 96
+  NUM_DISP: 192
+  DILATION: 3
+OPTIMIZER:
+  TYPE: "Adam"
+  LR: 2e-4
+LR_SCHEDULER:
+  TYPE: 'StepLR'
+  StepLR:
+    step_size: 10000
+    gamma: 0.5
+TRAIN:
+  BATCH_SIZE: 2
+  NUM_WORKERS: 2
+  LOG_PERIOD: 100
+  CHECKPOINT_PERIOD: 5000
+  MAX_TO_KEEP: 3
+  MAX_ITER: 100000
+VAL:
+  BATCH_SIZE: 1
+  NUM_WORKERS: 1
+  PERIOD: 5000
+  LOG_PERIOD: 100
+LOSS:
+  REAL_REPROJ:
+    WEIGHT: 2.0
+DATA_AUG:
+  SIM_IR: True
+TEST:
+  NUM_WORKERS: 0
+  MAX_DISP: 192
+  WEIGHT: "/jianyu-fast-vol/eval/psm_grad/model_055000.pth"

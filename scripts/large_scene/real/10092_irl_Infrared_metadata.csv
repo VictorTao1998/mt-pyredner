@@ -1,0 +1,15 @@
+Frame Info: 
+Type,Infrared 1
+Format,Y8
+Frame Number,6637
+Timestamp (ms),1665307149178.34
+Resolution x,1280
+Resolution y,720
+Bytes per pixel,1
+
+Intrinsic:,
+Fx,893.707703
+Fy,893.707703
+PPx,632.560425
+PPy,369.402985
+Distorsion,Brown Conrady

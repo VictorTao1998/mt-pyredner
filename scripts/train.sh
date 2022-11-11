@@ -1,0 +1,1 @@
+python -m torch.distributed.launch --nproc_per_node=2 active_zero2/train.py --cfg configs/example.yml
