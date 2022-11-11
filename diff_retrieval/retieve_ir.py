@@ -295,6 +295,9 @@ class DiffScene:
         real_depth = cv2.imread(
             paths["real_depth"],
             cv2.IMREAD_UNCHANGED)
+        print(paths["real_depth"], type(real_depth))
+        assert 1==0
+        
         real_depth = (real_depth.astype(float)) / 1000.0
         real_depth = cv2.resize(real_depth, (self.img_width, self.img_height),
                                 interpolation=cv2.INTER_NEAREST)
