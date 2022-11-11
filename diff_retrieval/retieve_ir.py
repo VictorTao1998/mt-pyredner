@@ -362,7 +362,7 @@ if __name__ == "__main__":
     pyredner.set_print_timing(False)
 
     timestamp = time.strftime("%y-%m-%d_%H-%M-%S")
-    filename = f"log.diff_retrieval.{timestamp}.txt"
+    filename = f"./logs/log.diff_retrieval.{timestamp}.txt"
     tflogger_dir = REPO_DIR + "/logs"
     os.makedirs(tflogger_dir, exist_ok=True)
     summary_writer = SummaryWriter(tflogger_dir)
@@ -401,7 +401,8 @@ if __name__ == "__main__":
         return depth_loss, grad_loss
 
     def compute_loss_img(render_dict):
-        mse_loss = F.mse_loss(render_dict["gt_irl"], render_dict["irl"])
+        print(torch.max(render_dict["gt_irl"]), torch.min(render_dict["gt_irl"]), torch.max(render_dict["irl"]), torch.mean(render_dict["irl"]))
+        mse_loss = F.mse_loss(render_dict["gt_irl"], render_dict["irl"], reduction='mean')
 
         return mse_loss
 
