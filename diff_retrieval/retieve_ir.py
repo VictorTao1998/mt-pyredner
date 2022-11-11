@@ -308,11 +308,12 @@ class DiffScene:
         gt_irl = cv2.imread(paths["gt_irl"], cv2.IMREAD_UNCHANGED)
         gt_irl = cv2.resize(gt_irl, (self.img_width, self.img_height),
                                 interpolation=cv2.INTER_NEAREST)
+        gt_irl = torch.tensor(gt_irl).to(pyredner.device).float()
 
         mask = cv2.imread(paths["mask"], 0)
         mask = cv2.resize(mask, (self.img_width, self.img_height), interpolation=cv2.INTER_NEAREST)
         mask = mask < 10
-        print(type(gt_irl), type(img_irl))
+        print(type(gt_irl), type(img_irl), gt_irl.shape, img_irl.shape)
         assert 1==0
         return {
             #"clean_depth": clean_depth,
