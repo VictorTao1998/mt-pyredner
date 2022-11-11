@@ -310,7 +310,7 @@ class DiffScene:
         gt_irl = cv2.imread(paths["gt_irl"], cv2.IMREAD_UNCHANGED)
         gt_irl = cv2.resize(gt_irl, (self.img_width, self.img_height),
                                 interpolation=cv2.INTER_NEAREST)
-        gt_irl = torch.tensor(gt_irl).to(pyredner.device).float()
+        gt_irl = torch.tensor(gt_irl).to(pyredner.device).float()/255.
 
         mask = cv2.imread(paths["mask"], 0)
         mask = cv2.resize(mask, (self.img_width, self.img_height), interpolation=cv2.INTER_NEAREST)
@@ -401,7 +401,7 @@ if __name__ == "__main__":
         return depth_loss, grad_loss
 
     def compute_loss_img(render_dict):
-        print(torch.max(render_dict["gt_irl"]), torch.min(render_dict["gt_irl"]), torch.max(render_dict["irl"]), torch.mean(render_dict["irl"]))
+        #print(torch.max(render_dict["gt_irl"]), torch.min(render_dict["gt_irl"]), torch.max(render_dict["irl"]), torch.mean(render_dict["irl"]))
         mse_loss = F.mse_loss(render_dict["gt_irl"], render_dict["irl"], reduction='mean')
 
         return mse_loss
