@@ -313,8 +313,8 @@ class DiffScene:
         mask = cv2.imread(paths["mask"], 0)
         mask = cv2.resize(mask, (self.img_width, self.img_height), interpolation=cv2.INTER_NEAREST)
         mask = mask < 10
-        print(type(gt_irl), type(img_irl), gt_irl.shape, img_irl.shape)
-        assert 1==0
+        #print(type(gt_irl), type(img_irl), gt_irl.shape, img_irl.shape)
+        #assert 1==0
         return {
             #"clean_depth": clean_depth,
             #"stereo_depth": stereo_depth,
