@@ -433,17 +433,12 @@ if __name__ == "__main__":
         logger.info(
             f"EPOCH: {epoch_idx:3d} loss_total: {loss_total:.3f}, loss_depth: {loss_depth:.3f}, loss_grad: {loss_grad:.3f}")
         logger.info(
-            f"eps: {diff_scene.epsilon.item():.2f}; mu: {diff_scene.mu.item():.2f}; sigma: {diff_scene.sigma.item():.2f}; beta: {diff_scene.beta.item():.2f}")
+            f"eps: {diff_scene.epsilon.item():.2f};")
         logger.info("===================================================")
 
         torch.save(
             {
-                "eps": diff_scene.epsilon,
-                "mu": diff_scene.mu,
-                "sigma": diff_scene.sigma,
-                "beta": diff_scene.beta,
-                "cnn1": diff_scene.cnn_1.state_dict(),
-                "cnn2": diff_scene.cnn_2.state_dict(),
+                "eps": diff_scene.epsilon
             },
             f"EP{epoch_idx:03d}.pth"
         )
@@ -453,4 +448,4 @@ if __name__ == "__main__":
         # plt.imsave("shadow.png", render_dict["shadow_map"][0].detach().cpu().numpy())
 
     logger.info(
-        f"eps: {diff_scene.epsilon.item():.2f}; mu: {diff_scene.mu.item():.2f}; sigma: {diff_scene.sigma.item():.2f}; beta: {diff_scene.beta.item():.2f}")
+        f"eps: {diff_scene.epsilon.item():.2f};")
