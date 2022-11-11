@@ -126,7 +126,7 @@ class ProjectionLight(pyredner.DeferredLight):
         # positions on the input image
         print(self.intensity.shape, image_samples.shape)
         assert 1==0
-        intensity = torch.nn.functional.grid_sample(self.intensity, image_samples)
+        intensity = torch.nn.functional.grid_sample(self.intensity, image_samples.clone())
         # NCHW -> HWC
         intensity = intensity.permute(0, 2, 3, 1).squeeze()
 
