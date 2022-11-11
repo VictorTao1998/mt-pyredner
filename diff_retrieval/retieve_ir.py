@@ -355,6 +355,7 @@ class DiffScene:
 
 if __name__ == "__main__":
     # Use GPU if available
+    torch.autograd.set_detect_anomaly(True)
     pyredner.set_use_gpu(torch.cuda.is_available())
     pyredner.set_print_timing(False)
 
