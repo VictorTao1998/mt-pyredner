@@ -205,10 +205,12 @@ class DiffScene:
         self.cam_ir_intrinsic_redner = intrinsic_from_opencv(self.cam_ir_intrinsic, (1920, 1080),
                                                              (self.img_width, self.img_height))
         light_image = pyredner.imread(REPO_DIR / 'data_rendering/materials/d415-pattern-sq.png').to(pyredner.get_device())
+
         #light_image = cv2.imread(REPO_DIR / 'data_rendering/materials/d415-pattern-sq.png', cv2.IMREAD_GRAYSCALE)
         # Convert light_image to current device
         self.light_image = light_image[:,:,0].unsqueeze(-1)
         self.light_image = torch.zeros_like(self.light_image, requires_grad=True).to(pyredner.get_device())
+        print("size",self.light_image.shape)
 
         self.min_disp = 8
         self.max_disp = 64
