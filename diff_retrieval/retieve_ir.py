@@ -337,7 +337,7 @@ class DiffScene:
         path_list = []
         for obj in OBJECTS:
             for pose_idx in range(1):
-                for view_idx in range(1, 2):
+                for view_idx in range(1, 10):
                     pose = json.load(open(BASELINE_POSE_DIR / f"baseline_{obj}_{pose_idx:02d}/input.json"))[obj]
 
                     paths = {
