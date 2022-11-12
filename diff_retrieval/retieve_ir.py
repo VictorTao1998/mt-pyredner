@@ -208,8 +208,6 @@ class DiffScene:
         # Convert light_image to current device
         self.light_image = light_image.to(pyredner.get_device())
         self.light_image = torch.zeros_like(self.light_image, requires_grad=True)
-        print(self.light_image.shape)
-        assert 1==0
 
         self.min_disp = 8
         self.max_disp = 64
@@ -434,6 +432,7 @@ if __name__ == "__main__":
             summary_writer.add_scalar("train/mse_loss", render_loss.item(), global_step=epoch_idx*num_sample+i)
             summary_writer.add_image('train/irl_render', render_dict["irl"].detach(), global_step=epoch_idx*num_sample+i, dataformats='HW')
             summary_writer.add_image('train/irl_gt', render_dict["gt_irl"].detach(), global_step=epoch_idx*num_sample+i, dataformats='HW')
+            summary_writer.add_image('train/active_light', diff_scene.light_image.clone().detach().permute(2,0,1), global_step=epoch_idx*num_sample+i, dataformats='CHW')
             if i % 20 == 0:
                 logger.info(
                     f"iter: {i:4d} loss_total: {loss_total / (i + 1):.3f}, loss_depth: {loss_depth / (i + 1):.3f},"
