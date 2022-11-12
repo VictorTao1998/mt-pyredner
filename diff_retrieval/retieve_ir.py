@@ -436,7 +436,7 @@ if __name__ == "__main__":
             summary_writer.add_image('train/irl_render', render_dict["irl"].detach(), global_step=epoch_idx*num_sample+i, dataformats='HW')
             summary_writer.add_image('train/irl_gt', render_dict["gt_irl"].detach(), global_step=epoch_idx*num_sample+i, dataformats='HW')
             summary_writer.add_image('train/active_light', diff_scene.light_image.clone().detach()[:,:,0], global_step=epoch_idx*num_sample+i, dataformats='HW')
-            if i % 20 == 0:
+            if i % 5 == 0:
                 logger.info(
                     f"iter: {i:4d} loss_total: {loss_total / (i + 1):.3f}, loss_depth: {loss_depth / (i + 1):.3f},"
                     f" loss_grad: {loss_grad / (i + 1):.3f}")
