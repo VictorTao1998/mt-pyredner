@@ -207,7 +207,7 @@ class DiffScene:
         #light_image = pyredner.imread(REPO_DIR / 'data_rendering/materials/d415-pattern-sq.png')
         light_image = cv2.imread(REPO_DIR / 'data_rendering/materials/d415-pattern-sq.png', cv2.IMREAD_GRAYSCALE)
         # Convert light_image to current device
-        self.light_image = torch.tensor(light_image).to(pyredner.get_device())
+        self.light_image = torch.tensor(light_image).float().to(pyredner.get_device())/255.
         self.light_image = torch.zeros_like(self.light_image, requires_grad=True).to(pyredner.get_device())
 
         self.min_disp = 8
